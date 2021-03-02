@@ -354,9 +354,9 @@ LSRPrisma_flow <- function(data,
   prevdat_lab_x2 <- prevdat_lab_x1 #x label location
   prevdat_lab_y2 <- prevdat_ymax - ((prevdat_ymax - prevdat_ymin) / 2) - 0.5 #y label location
   prevdat_data_x1 <- prevdat_lab_x1
-  prevdat_data_y1 <- prevdat_lab_y1 - 1.2
+  prevdat_data_y1 <- prevdat_lab_y1 - 1
   prevdat_data_x2 <- prevdat_lab_x1
-  prevdat_data_y2 <- prevdat_lab_y2 - 1.2
+  prevdat_data_y2 <- prevdat_lab_y2 - 1
   
   #Create 'fake' data set to establish plot limits
   if (other == TRUE){
@@ -415,6 +415,8 @@ LSRPrisma_flow <- function(data,
       
         #previous
         geom_rect(mapping=aes(xmin=prevdat_xmin, xmax=prevdat_xmax, ymin=prevdat_ymin, ymax=prevdat_ymax), color="#dcdcdc", fill='#dcdcdc') + #previous box
+        geom_rect(mapping=aes(xmin=prevdat_xmin, xmax=prevdat_xmax, ymin=prevdat_data_y1-0.2, ymax=prevdat_data_y1+0.2), color="gray95", fill='gray95') + #light background
+        geom_rect(mapping=aes(xmin=prevdat_xmin, xmax=prevdat_xmax, ymin=prevdat_data_y2-0.2, ymax=prevdat_data_y2+0.2), color="gray95", fill='gray95') + #light background
         annotate(geom="text", x=prevdat_lab_x1, y=prevdat_lab_y1, label=prevdat_lab1, color="black", size=font_size) + #previous label 1
         annotate(geom="text", x=prevdat_lab_x2, y=prevdat_lab_y2, label=prevdat_lab2, color="black", size=font_size) + #previous label 2
         annotate(geom="text", x=prevdat_data_x1, y=prevdat_data_y1, label=data$previous_studies, color="black", size=font_size) + #previous data
@@ -620,6 +622,8 @@ LSRPrisma_flow <- function(data,
       
         #previous
         geom_rect(mapping=aes(xmin=prevdat_xmin, xmax=prevdat_xmax, ymin=prevdat_ymin, ymax=prevdat_ymax), color="#dcdcdc", fill='#dcdcdc') + #previous box
+        geom_rect(mapping=aes(xmin=prevdat_xmin, xmax=prevdat_xmax, ymin=prevdat_data_y1-0.2, ymax=prevdat_data_y1+0.2), color="gray95", fill='gray95') + #light background
+        geom_rect(mapping=aes(xmin=prevdat_xmin, xmax=prevdat_xmax, ymin=prevdat_data_y2-0.2, ymax=prevdat_data_y2+0.2), color="gray95", fill='gray95') + #light background
         annotate(geom="text", x=prevdat_lab_x1, y=prevdat_lab_y1, label=prevdat_lab1, color="black", size=font_size) + #previous label 1
         annotate(geom="text", x=prevdat_lab_x2, y=prevdat_lab_y2, label=prevdat_lab2, color="black", size=font_size) + #previous label 2
         annotate(geom="text", x=prevdat_data_x1, y=prevdat_data_y1, label=data$previous_studies, color="black", size=font_size) + #previous data
