@@ -1,5 +1,4 @@
-data,node,box,description,boxtext,tooltips,url,Base search (Jan 2020),"Cumulative updates 
-(Feb 2020-Aug 2020)"
+data,node,box,description,boxtext,tooltips,url,"Previous searches, Jan-Jul 2020","Last update, Aug 2020"
 previous_studies,node5,box1,Studies included in previous version of review,Studies included in previous version of review,Studies included in previous version of review,previous_studies.html,0,0
 previous_reports,NA,box1,Reports of studies included in previous version of review,Reports of studies included in previous version of review,NA,previous_reports.html,0,0
 database_results,node7,box2,Records identified from: Databases,Databases,Records identified from: Databases,database_results.html,121,4

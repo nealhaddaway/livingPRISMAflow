@@ -19,7 +19,7 @@
 #' \dontrun{
 #' data <- read.csv('inst/extdata/approach1.csv')
 #' data <- LSRPrisma_data(data)
-#' plot <- LSRPrisma_flow(data, previous = TRUE, other = TRUE)
+#' plot <- LSRPrisma_flow(data, previous = FALSE, other = TRUE)
 #' plot
 #' }
 #' @export
@@ -53,8 +53,12 @@ LSRPrisma_flow <- function(data,
   dbrexclheight <- box_height1 + (data$excl_lines * 0.5) + 0.5
   otherexclheight <- box_height1 + (data$excl_lines_other * 0.5) + 0.5
   
-  #Column names
-  columns <- gsub(' ', '\n', colnames(data[[3]]))
+  #Column names - if two words, split across lines
+  if (lengths(regmatches(colnames(data[[3]][1]), gregexpr(" ", colnames(data[[3]][1])))) < 2){
+    columns <- gsub(' ', '\n', colnames(data[[3]]))
+  } else {
+    columns <- colnames(data[[3]])
+  }
   
   #Column xmin
   column1 <- basex + label_width + gap_width
@@ -539,7 +543,7 @@ LSRPrisma_flow <- function(data,
         geom_rect(mapping=aes(xmin=otherrepexcl_xmin, xmax=otherrepexcl_xmax, ymin=otherrepexcl_data_y-0.6, ymax=otherrepexcl_data_y-0.2), color="gray95", fill='gray95') + #light background
         annotate(geom="text", x=otherrepexcl_xmin+col_mid_x, y=otherrepexcl_data_y-0.4, label=as.character(data$other_excluded_data), fontface=2, color="black", size=font_size-0.5) +
         
-        annotate(geom="text", x=otherrepexcl_lab_x, y=otherrepexclreasons_lab_y, label=data$other_excluded, color="black", size=font_size, vjust=1) + #otherrepexcl reasons
+        annotate(geom="text", x=otherrepexcl_lab_x, y=otherrepexclreasons_lab_y, label=data$other_excluded, color="black", size=font_size-0.25, vjust=1) + #otherrepexcl reasons
         
         #dbrrep
         geom_rect(mapping=aes(xmin=dbrrep_xmin, xmax=dbrrep_xmax, ymin=dbrrep_ymin, ymax=dbrrep_ymax), color="#dcdcdc", fill='#dcdcdc') + #dbrrep box
@@ -559,7 +563,7 @@ LSRPrisma_flow <- function(data,
         geom_rect(mapping=aes(xmin=dbrrepexcl_xmin, xmax=dbrrepexcl_xmax, ymin=dbrrepexcl_data_y-0.6, ymax=dbrrepexcl_data_y-0.2), color="gray95", fill='gray95') + #light background
         annotate(geom="text", x=dbrrepexcl_xmin+col_mid_x, y=dbrrepexcl_data_y-0.4, label=as.character(data$dbr_excluded_data), fontface=2, color="black", size=font_size-0.5) +
         
-        annotate(geom="text", x=dbrrepexcl_lab_x, y=dbrrepexclreasons_lab_y, label=data$dbr_excluded, color="black", size=font_size, vjust=1) + #dbrrepexcl reasons
+        annotate(geom="text", x=dbrrepexcl_lab_x, y=dbrrepexclreasons_lab_y, label=data$dbr_excluded, color="black", size=font_size-0.25, vjust=1) + #dbrrepexcl reasons
         
         #new
         geom_rect(mapping=aes(xmin=new_xmin, xmax=new_xmax, ymin=new_ymin, ymax=new_ymax), color="#dcdcdc", fill='#dcdcdc') + #new box
@@ -712,7 +716,7 @@ LSRPrisma_flow <- function(data,
         geom_rect(mapping=aes(xmin=dbrrepexcl_xmin, xmax=dbrrepexcl_xmax, ymin=dbrrepexcl_data_y-0.6, ymax=dbrrepexcl_data_y-0.2), color="gray95", fill='gray95') + #light background
         annotate(geom="text", x=dbrrepexcl_xmin+col_mid_x, y=dbrrepexcl_data_y-0.4, label=as.character(data$dbr_excluded_data), fontface=2, color="black", size=font_size-0.5) +
         
-        annotate(geom="text", x=dbrrepexcl_lab_x, y=dbrrepexclreasons_lab_y, label=data$dbr_excluded, color="black", size=font_size, vjust=1) + #dbrrepexcl reasons
+        annotate(geom="text", x=dbrrepexcl_lab_x, y=dbrrepexclreasons_lab_y, label=data$dbr_excluded, color="black", size=font_size-0.25, vjust=1) + #dbrrepexcl reasons
         
         #new
         geom_rect(mapping=aes(xmin=new_xmin, xmax=new_xmax, ymin=new_ymin, ymax=new_ymax), color="#dcdcdc", fill='#dcdcdc') + #new box
@@ -893,7 +897,7 @@ LSRPrisma_flow <- function(data,
         geom_rect(mapping=aes(xmin=otherrepexcl_xmin, xmax=otherrepexcl_xmax, ymin=otherrepexcl_data_y-0.6, ymax=otherrepexcl_data_y-0.2), color="gray95", fill='gray95') + #light background
         annotate(geom="text", x=otherrepexcl_xmin+col_mid_x, y=otherrepexcl_data_y-0.4, label=as.character(data$other_excluded_data), fontface=2, color="black", size=font_size-0.5) +
         
-        annotate(geom="text", x=otherrepexcl_lab_x, y=otherrepexclreasons_lab_y, label=data$other_excluded, color="black", size=font_size, vjust=1) + #otherrepexcl reasons
+        annotate(geom="text", x=otherrepexcl_lab_x, y=otherrepexclreasons_lab_y, label=data$other_excluded, color="black", size=font_size-0.25, vjust=1) + #otherrepexcl reasons
         
         #dbrrep
         geom_rect(mapping=aes(xmin=dbrrep_xmin, xmax=dbrrep_xmax, ymin=dbrrep_ymin, ymax=dbrrep_ymax), color="#dcdcdc", fill='#dcdcdc') + #dbrrep box
@@ -913,7 +917,7 @@ LSRPrisma_flow <- function(data,
         geom_rect(mapping=aes(xmin=dbrrepexcl_xmin, xmax=dbrrepexcl_xmax, ymin=dbrrepexcl_data_y-0.6, ymax=dbrrepexcl_data_y-0.2), color="gray95", fill='gray95') + #light background
         annotate(geom="text", x=dbrrepexcl_xmin+col_mid_x, y=dbrrepexcl_data_y-0.4, label=as.character(data$dbr_excluded_data), fontface=2, color="black", size=font_size-0.5) +
         
-        annotate(geom="text", x=dbrrepexcl_lab_x, y=dbrrepexclreasons_lab_y, label=data$dbr_excluded, color="black", size=font_size, vjust=1) + #dbrrepexcl reasons
+        annotate(geom="text", x=dbrrepexcl_lab_x, y=dbrrepexclreasons_lab_y, label=data$dbr_excluded, color="black", size=font_size-0.25, vjust=1) + #dbrrepexcl reasons
         
         #new
         geom_rect(mapping=aes(xmin=new_xmin, xmax=new_xmax, ymin=new_ymin, ymax=new_ymax), color="#dcdcdc", fill='#dcdcdc') + #new box
@@ -1038,7 +1042,8 @@ LSRPrisma_flow <- function(data,
           geom_rect(mapping=aes(xmin=dbrrepexcl_xmin, xmax=dbrrepexcl_xmax, ymin=dbrrepexcl_data_y-0.6, ymax=dbrrepexcl_data_y-0.2), color="gray95", fill='gray95') + #light background
           annotate(geom="text", x=dbrrepexcl_xmin+col_mid_x, y=dbrrepexcl_data_y-0.4, label=as.character(data$dbr_excluded_data), fontface=2, color="black", size=font_size-0.5) +
           
-          annotate(geom="text", x=dbrrepexcl_lab_x, y=dbrrepexclreasons_lab_y, label=data$dbr_excluded, color="black", size=font_size, vjust=1) + #dbrrepexcl reasons
+          annotate(geom="text", x=dbrrepexcl_lab_x, y=dbrrepexclreasons_lab_y, label=data$dbr_excluded, color="black", size=font_size-0.25, vjust=1) + #dbrrepexcl reasons
+          
           
           #new
           geom_rect(mapping=aes(xmin=new_xmin, xmax=new_xmax, ymin=new_ymin, ymax=new_ymax), color="#dcdcdc", fill='#dcdcdc') + #new box
