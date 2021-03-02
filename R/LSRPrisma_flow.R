@@ -14,17 +14,20 @@
 #' @return A LSR Prisma plot of the data plotted onto a flow 
 #' diagram.
 #' @import ggplot2
-#' @importFrom statebins geom_rrect
 #' @importFrom ggpubr theme_transparent
 #' @examples
+#' \dontrun{
 #' data <- read.csv('inst/extdata/approach1.csv')
 #' data <- LSRPrisma_data(data)
 #' plot <- LSRPrisma_flow(data, previous = TRUE, other = TRUE)
 #' plot
+#' }
 #' @export
 LSRPrisma_flow <- function(data,
                            previous = TRUE,
                            other = TRUE){
+  
+  geom_rrect <- utils::getFromNamespace("geom_rrect", "statebins")
   
   #Box dimensions
   #Table data positions
@@ -376,12 +379,12 @@ LSRPrisma_flow <- function(data,
         scale_y_continuous(name="y")
       
       plot <- canvas +
-        statebins:::geom_rrect(mapping=aes(xmin=ident_xmin, xmax=ident_xmax, ymin=ident_ymin, ymax=ident_ymax), color="#bcd1ee", fill="#bcd1ee") + #identification box
-        statebins:::geom_rrect(mapping=aes(xmin=screen_xmin, xmax=screen_xmax, ymin=screen_ymin, ymax=screen_ymax), color="#bcd1ee", fill="#bcd1ee") + #screening box
-        statebins:::geom_rrect(mapping=aes(xmin=incl_xmin, xmax=incl_xmax, ymin=incl_ymin, ymax=incl_ymax), color="#bcd1ee", fill="#bcd1ee") + #included box
-        statebins:::geom_rrect(mapping=aes(xmin=prev_xmin, xmax=prev_xmax, ymin=prev_ymin, ymax=prev_ymax), color="#dcdcdc", fill="#dcdcdc") + #previous box
-        statebins:::geom_rrect(mapping=aes(xmin=dbr_xmin, xmax=dbr_xmax, ymin=dbr_ymin, ymax=dbr_ymax), color="#ffc125", fill="#ffc125") + #dbr box
-        statebins:::geom_rrect(mapping=aes(xmin=other_xmin, xmax=other_xmax, ymin=other_ymin, ymax=other_ymax), color="#dcdcdc", fill="#dcdcdc") + #other box
+        geom_rrect(mapping=aes(xmin=ident_xmin, xmax=ident_xmax, ymin=ident_ymin, ymax=ident_ymax), color="#bcd1ee", fill="#bcd1ee") + #identification box
+        geom_rrect(mapping=aes(xmin=screen_xmin, xmax=screen_xmax, ymin=screen_ymin, ymax=screen_ymax), color="#bcd1ee", fill="#bcd1ee") + #screening box
+        geom_rrect(mapping=aes(xmin=incl_xmin, xmax=incl_xmax, ymin=incl_ymin, ymax=incl_ymax), color="#bcd1ee", fill="#bcd1ee") + #included box
+        geom_rrect(mapping=aes(xmin=prev_xmin, xmax=prev_xmax, ymin=prev_ymin, ymax=prev_ymax), color="#dcdcdc", fill="#dcdcdc") + #previous box
+        geom_rrect(mapping=aes(xmin=dbr_xmin, xmax=dbr_xmax, ymin=dbr_ymin, ymax=dbr_ymax), color="#ffc125", fill="#ffc125") + #dbr box
+        geom_rrect(mapping=aes(xmin=other_xmin, xmax=other_xmax, ymin=other_ymin, ymax=other_ymax), color="#dcdcdc", fill="#dcdcdc") + #other box
         annotate(geom="text", x=ident_lab_x, y=ident_lab_y, label=ident_lab, color="black", size=font_size, angle = 90) + 
         annotate(geom="text", x=screen_lab_x, y=screen_lab_y, label=screen_lab, color="black", size=font_size, angle = 90) + 
         annotate(geom="text", x=incl_lab_x, y=incl_lab_y, label=incl_lab, color="black", size=font_size, angle = 90) + 
@@ -590,11 +593,11 @@ LSRPrisma_flow <- function(data,
         scale_y_continuous(name="y")
       
       plot <- canvas +
-        statebins:::geom_rrect(mapping=aes(xmin=ident_xmin, xmax=ident_xmax, ymin=ident_ymin, ymax=ident_ymax), color="#bcd1ee", fill="#bcd1ee") + #identification box
-        statebins:::geom_rrect(mapping=aes(xmin=screen_xmin, xmax=screen_xmax, ymin=screen_ymin, ymax=screen_ymax), color="#bcd1ee", fill="#bcd1ee") + #screening box
-        statebins:::geom_rrect(mapping=aes(xmin=incl_xmin, xmax=incl_xmax, ymin=incl_ymin, ymax=incl_ymax), color="#bcd1ee", fill="#bcd1ee") + #included box
-        statebins:::geom_rrect(mapping=aes(xmin=prev_xmin, xmax=prev_xmax, ymin=prev_ymin, ymax=prev_ymax), color="#dcdcdc", fill="#dcdcdc") + #previous box
-        statebins:::geom_rrect(mapping=aes(xmin=dbr_xmin, xmax=dbr_xmax, ymin=dbr_ymin, ymax=dbr_ymax), color="#ffc125", fill="#ffc125") + #dbr box
+        geom_rrect(mapping=aes(xmin=ident_xmin, xmax=ident_xmax, ymin=ident_ymin, ymax=ident_ymax), color="#bcd1ee", fill="#bcd1ee") + #identification box
+        geom_rrect(mapping=aes(xmin=screen_xmin, xmax=screen_xmax, ymin=screen_ymin, ymax=screen_ymax), color="#bcd1ee", fill="#bcd1ee") + #screening box
+        geom_rrect(mapping=aes(xmin=incl_xmin, xmax=incl_xmax, ymin=incl_ymin, ymax=incl_ymax), color="#bcd1ee", fill="#bcd1ee") + #included box
+        geom_rrect(mapping=aes(xmin=prev_xmin, xmax=prev_xmax, ymin=prev_ymin, ymax=prev_ymax), color="#dcdcdc", fill="#dcdcdc") + #previous box
+        geom_rrect(mapping=aes(xmin=dbr_xmin, xmax=dbr_xmax, ymin=dbr_ymin, ymax=dbr_ymax), color="#ffc125", fill="#ffc125") + #dbr box
         annotate(geom="text", x=ident_lab_x, y=ident_lab_y, label=ident_lab, color="black", size=font_size, angle = 90) + 
         annotate(geom="text", x=screen_lab_x, y=screen_lab_y, label=screen_lab, color="black", size=font_size, angle = 90) + 
         annotate(geom="text", x=incl_lab_x, y=incl_lab_y, label=incl_lab, color="black", size=font_size, angle = 90) + 
@@ -741,11 +744,11 @@ LSRPrisma_flow <- function(data,
         scale_y_continuous(name="y")
       
       plot <- canvas +
-        statebins:::geom_rrect(mapping=aes(xmin=ident_xmin, xmax=ident_xmax, ymin=ident_ymin, ymax=ident_ymax), color="#bcd1ee", fill="#bcd1ee") + #identification box
-        statebins:::geom_rrect(mapping=aes(xmin=screen_xmin, xmax=screen_xmax, ymin=screen_ymin, ymax=screen_ymax), color="#bcd1ee", fill="#bcd1ee") + #screening box
-        statebins:::geom_rrect(mapping=aes(xmin=incl_xmin, xmax=incl_xmax, ymin=incl_ymin, ymax=incl_ymax), color="#bcd1ee", fill="#bcd1ee") + #included box
-        statebins:::geom_rrect(mapping=aes(xmin=dbr_xmin, xmax=dbr_xmax, ymin=dbr_ymin, ymax=dbr_ymax), color="#ffc125", fill="#ffc125") + #dbr box
-        statebins:::geom_rrect(mapping=aes(xmin=other_xmin, xmax=other_xmax, ymin=other_ymin, ymax=other_ymax), color="#dcdcdc", fill="#dcdcdc") + #other box
+        geom_rrect(mapping=aes(xmin=ident_xmin, xmax=ident_xmax, ymin=ident_ymin, ymax=ident_ymax), color="#bcd1ee", fill="#bcd1ee") + #identification box
+        geom_rrect(mapping=aes(xmin=screen_xmin, xmax=screen_xmax, ymin=screen_ymin, ymax=screen_ymax), color="#bcd1ee", fill="#bcd1ee") + #screening box
+        geom_rrect(mapping=aes(xmin=incl_xmin, xmax=incl_xmax, ymin=incl_ymin, ymax=incl_ymax), color="#bcd1ee", fill="#bcd1ee") + #included box
+        geom_rrect(mapping=aes(xmin=dbr_xmin, xmax=dbr_xmax, ymin=dbr_ymin, ymax=dbr_ymax), color="#ffc125", fill="#ffc125") + #dbr box
+        geom_rrect(mapping=aes(xmin=other_xmin, xmax=other_xmax, ymin=other_ymin, ymax=other_ymax), color="#dcdcdc", fill="#dcdcdc") + #other box
         annotate(geom="text", x=ident_lab_x, y=ident_lab_y, label=ident_lab, color="black", size=font_size, angle = 90) + 
         annotate(geom="text", x=screen_lab_x, y=screen_lab_y, label=screen_lab, color="black", size=font_size, angle = 90) + 
         annotate(geom="text", x=incl_lab_x, y=incl_lab_y, label=incl_lab, color="black", size=font_size, angle = 90) + 
@@ -929,10 +932,10 @@ LSRPrisma_flow <- function(data,
           scale_y_continuous(name="y")
         
         plot <- canvas +
-          statebins:::geom_rrect(mapping=aes(xmin=ident_xmin, xmax=ident_xmax, ymin=ident_ymin, ymax=ident_ymax), color="#bcd1ee", fill="#bcd1ee") + #identification box
-          statebins:::geom_rrect(mapping=aes(xmin=screen_xmin, xmax=screen_xmax, ymin=screen_ymin, ymax=screen_ymax), color="#bcd1ee", fill="#bcd1ee") + #screening box
-          statebins:::geom_rrect(mapping=aes(xmin=incl_xmin, xmax=incl_xmax, ymin=incl_ymin, ymax=incl_ymax), color="#bcd1ee", fill="#bcd1ee") + #included box
-          statebins:::geom_rrect(mapping=aes(xmin=dbr_xmin, xmax=dbr_xmax, ymin=dbr_ymin, ymax=dbr_ymax), color="#ffc125", fill="#ffc125") + #dbr box
+          geom_rrect(mapping=aes(xmin=ident_xmin, xmax=ident_xmax, ymin=ident_ymin, ymax=ident_ymax), color="#bcd1ee", fill="#bcd1ee") + #identification box
+          geom_rrect(mapping=aes(xmin=screen_xmin, xmax=screen_xmax, ymin=screen_ymin, ymax=screen_ymax), color="#bcd1ee", fill="#bcd1ee") + #screening box
+          geom_rrect(mapping=aes(xmin=incl_xmin, xmax=incl_xmax, ymin=incl_ymin, ymax=incl_ymax), color="#bcd1ee", fill="#bcd1ee") + #included box
+          geom_rrect(mapping=aes(xmin=dbr_xmin, xmax=dbr_xmax, ymin=dbr_ymin, ymax=dbr_ymax), color="#ffc125", fill="#ffc125") + #dbr box
           annotate(geom="text", x=ident_lab_x, y=ident_lab_y, label=ident_lab, color="black", size=font_size, angle = 90) + 
           annotate(geom="text", x=screen_lab_x, y=screen_lab_y, label=screen_lab, color="black", size=font_size, angle = 90) + 
           annotate(geom="text", x=incl_lab_x, y=incl_lab_y, label=incl_lab, color="black", size=font_size, angle = 90) + 

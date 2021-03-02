@@ -5,9 +5,12 @@
 #' being an additional data point in a LSR incremental update.
 #' @param data Input data frame based on 'inst/extdata/template.csv'.
 #' @return List of objects needed by 'LSRPRISMA_flow()'.
+#' @importFrom stringr str_count
 #' @examples 
+#' \dontrun{
 #' data <- read.csv('inst/extdata/approach1.csv')
 #' flowdata <- LSRPrisma_data(data)
+#' }
 #' @export
 LSRPrisma_data <- function (data){
   

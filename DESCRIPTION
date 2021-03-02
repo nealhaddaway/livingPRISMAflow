@@ -1,5 +1,5 @@
 Package: livingPRISMAflow
-Title: Produce Living Systematic Review PRISMA Flow Diagrams
+Title: Make Interactive 'PRISMA' Flow Diagrams
 Version: 0.0.1
 Authors@R: 
     person(given = "Neal",
@@ -8,34 +8,34 @@ Authors@R:
            email = "nealhaddaway@gmail.com",
            comment = c(ORCID = "0000-0003-3902-2234"))
 Description: Produce flow diagrams that are compliant with the 
-  PRISMA 2020 reporting standards for living systematic reviews 
-  (LSR). LSRs are regularly updated evidence syntheses that require 
-  specific visualisations of the flow diagrams to demonstrate both 
-  original (base) and incremental flows of evidence through the 
-  methodological pipeline from identification, through screening, 
-  to a final set of included studies. Data are read in using the 
-  function `LSRPrisma_data()` from a standard template (e.g. 
-  'inst/extdata/approach1.csv'). Data should be entered into this 
-  template with each incremental value or update stored as a separate 
-  column. The function `LSRPrisma_flow()` then produces a flow 
-  diagram with each column presented in a table within each box. 
-  Users can choose to include 'previous' and 'other' sources of 
-  studies. 
-License: MIT + file LICENSE
+    PRISMA 2020 reporting standards for living systematic reviews 
+    (LSR). LSRs are regularly updated evidence syntheses that require 
+    specific visualisations of the flow diagrams to demonstrate both 
+    original (base) and incremental flows of evidence through the 
+    methodological pipeline from identification, through screening, 
+    to a final set of included studies. Data are read in using the 
+    function `LSRPrisma_data()` from a standard template (e.g. 
+    'inst/extdata/approach1.csv'). Data should be entered into this 
+    template with each incremental value or update stored as a separate 
+    column. The function `LSRPrisma_flow()` then produces a flow 
+    diagram with each column presented in a table within each box. 
+    Users can choose to include 'previous' and 'other' sources of 
+    studies. 
 Imports:
-  ggplot2,
-  ggpubr,
-  statebins
+    ggplot2,
+    ggpubr,
+    stringr,
+    utils
 Suggests:
-  knitr,
-  rmarkdown
+    knitr,
+    rmarkdown
 VignetteBuilder: 
     knitr, 
     rmarkdown
+BugReports: https://github.com/nealhaddaway/livingPRISMAflow
+URL: https://github.com/nealhaddaway/livingPRISMAflow
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-BugReports: https://github.com/nealhaddaway/livingPRISMAflow
-URL: https://github.com/nealhaddaway/livingPRISMAflow 
-Language: en-UK
