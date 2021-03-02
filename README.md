@@ -12,7 +12,8 @@ Install the package using the following code:
 <br>
 <br>
 Please cite as:
-Neal R Haddaway (2021). livingPRISMAflow: R package and ShinyApp for producing living PRISMA flow diagrams (Version 0.0.1). zenodo. https://doi.org/10.5281/zenodo.4572459
+Neal R Haddaway (2021). livingPRISMAflow: R package and ShinyApp for producing living PRISMA flow diagrams (Version 0.0.1). zenodo. https://doi.org/10.5281/zenodo.4572459<br>
+<a id="raw-url" href="https://raw.githubusercontent.com/nealhaddaway/livingPRISMAflow/master/inst/extdata/citation.ris">Citation in .ris format (right click 'Save Link As')</a>
 <br>
 <hr>
 
