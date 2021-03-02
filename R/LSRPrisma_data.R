@@ -6,13 +6,14 @@
 #' @param data Input data frame based on 'inst/extdata/template.csv'.
 #' @return List of objects needed by 'LSRPRISMA_flow()'.
 #' @examples 
-#' data <- read.csv('inst/extdata/template.csv')
+#' data <- read.csv('inst/extdata/approach1.csv')
 #' flowdata <- LSRPrisma_data(data)
 #' @export
 LSRPrisma_data <- function (data){
   
   #Subset relevant columns from data
-  dataset <- data.frame(data[,8:15])
+  cols <- ncol(data)
+  dataset <- data.frame(data[,8:cols])
     names(dataset) <- gsub('\\.',' ',colnames(dataset))
   
   #Create objects for each flow diagram input

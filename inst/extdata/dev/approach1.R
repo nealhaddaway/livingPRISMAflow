@@ -10,7 +10,7 @@ library(ggpmisc)
 #' @return A LSR Prisma plot of the data plotted onto a flow 
 #' diagram.
 #' @examples
-#' data <- read.csv('inst/extdata/template.csv')
+#' data <- read.csv('inst/extdata/approach1.csv')
 #' data <- LSRPrisma_data(data)
 #' plot <- LSRPrisma_flow(data)
 #' plot
