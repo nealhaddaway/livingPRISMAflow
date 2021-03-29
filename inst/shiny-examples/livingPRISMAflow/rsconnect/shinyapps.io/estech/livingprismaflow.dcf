@@ -5,6 +5,6 @@ account: estech
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3878217
-bundleId: 4407121
+bundleId: 4407462
 url: https://estech.shinyapps.io/livingprismaflow/
-when: 1617016613.28684
+when: 1617023570.91173

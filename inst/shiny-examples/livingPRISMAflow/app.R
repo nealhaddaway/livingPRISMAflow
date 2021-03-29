@@ -10,7 +10,7 @@ source("LSRPrisma_flow.R")
 #template <- read.csv("www/PRISMA.csv",stringsAsFactors = FALSE)
 
 # Define UI for application that draws a histogram
-ui <- shinyUI(navbarPage("PRISMA Flow Diagram",
+ui <- shinyUI(navbarPage("Living PRISMA Flow Diagram",
                          
                          # Tab 1 ----
                          tabPanel("Home",
@@ -96,7 +96,7 @@ ui <- shinyUI(navbarPage("PRISMA Flow Diagram",
                                           downloadButton('downloadPlot', 'Download PDF')
                                       ), 
                                       mainPanel(
-                                          plotOutput("plot"),
+                                          plotOutput("plot", width = '100%'),
                                           add_busy_spinner(spin = "fading-circle", color = "#ffc125", position = "full-page"))
                                   ))
 ))
@@ -145,7 +145,7 @@ server <- function(input, output) {
     # Demo reactive imgage
     output$frame <- renderUI({
         format <- paste0('https://github.com/nealhaddaway/livingPRISMAflow/blob/master/inst/shiny-examples/livingPRISMAflow/www/', input$format, '.png?raw=true')
-        my_test <- tags$img(src=format, width='100%', height = '100%')
+        my_test <- tags$img(src=format, width='70%', height = '70%')
         my_test
     })
     
