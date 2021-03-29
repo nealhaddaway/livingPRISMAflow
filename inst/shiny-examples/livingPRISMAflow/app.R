@@ -1,6 +1,7 @@
 library(shiny)
 library(ggplot2)
 library(shinybusy)
+library(statebins)
 
 source("LSRPrisma_data.R")
 source("LSRPrisma_flow.R")
@@ -30,23 +31,23 @@ ui <- shinyUI(navbarPage("PRISMA Flow Diagram",
                                              'Please let us know if you have any feedback or if you encounter an error by sending an email to ', tags$a(href="mailto:neal.haddaway@sei.org", "neal.haddaway@sei.org"),
                                              br(),
                                              br(),
-                                             tags$a(href="template.csv", "Download the template CSV file", download=NA, target="_blank"),
+                                             HTML('<a href="template.csv"><button style = "border-radius:8px;background-color:#b6cce6;border: none;color: white;padding: 10px 25px;text-align: center;text-decoration: none;display: inline-block;font-size: 14px;margin: 4px 2px;cursor:pointer;">Download the template CSV file</button></a>'),
+                                             #tags$a(href="template.csv", "Download the template CSV file", download=NA, target="_blank"),
                                              br(),
                                              br(),
-                                             'Upload your edited file here:',
+                                             'See the four different formats possible by making a selection from this dropdown box:',
                                              br(),
-                                             fileInput("data_upload", "Choose CSV File",
-                                                       multiple = FALSE,
-                                                       accept = c("text/csv",
-                                                                  "text/comma-separated-values,text/plain",
-                                                                  ".csv")),
-                                             # actionButton("reset_data_upload", "Click to clear uploaded data",
-                                             # style="color: #fff; background-color: #e86868; border-color: #e86868"),
-                                             # br(),
+                                             selectInput("format", "Select a format", choices = c('Approach 1: Base review and each update separately' = 'one',
+                                                                                                  'Approach 2: Combined base and update' = 'two',
+                                                                                                  'Approach 3: Base review separately and combined updates' = 'three',
+                                                                                                  'Approach 4: Base review and updates combined, latest update separate' = 'four'), width='100%'),
+                                             br(),
+                                             uiOutput('frame'),
+                                             br(),
                                              hr(),
                                              'Please cite as:',
                                              br(),
-                                             'Neal R Haddaway. (2021). livingPRISMA2020_flow: R package and ShinyApp for producing PRISMA-style flow diagrams for living systematic reviews (Version 0.0.1). Zenodo.', 
+                                             'Neal R Haddaway. (2021). livingPRISMA_flow: R package and ShinyApp for producing PRISMA-style flow diagrams for living systematic reviews (Version 0.0.1). Zenodo.', 
                                              tags$a(href="xxx", "xxx"),
                                              br(),
                                              tags$a(href="Haddaway_2021.ris", "Download citation (.ris)", download=NA, target="_blank")
@@ -64,7 +65,7 @@ ui <- shinyUI(navbarPage("PRISMA Flow Diagram",
                                              br(),
                                              'Neal R Haddaway (creator, author)', br(),
                                              'Luke A McGuinness (coder, contributor)', br(),
-                                             'Lara Khale (advisor)', br(),
+                                             'Lara Kahale (advisor)', br(),
                                              'Elie A Akl (advisor)', br(),
                                              br(),
                                              tags$a(href="https://github.com/nealhaddaway/livingPRISMAflow", tags$img(height = 40, width = 40, src = "https://pngimg.com/uploads/github/github_PNG40.png")), 
@@ -76,16 +77,23 @@ ui <- shinyUI(navbarPage("PRISMA Flow Diagram",
                          # Tab 2 ----
                          tabPanel("The flow diagram",
                                   sidebarLayout(
-                                      sidebarPanel(
+                                      sidebarPanel(width=3,
                                           #style = "overflow-y:scroll; max-height: 900px; position:relative;",
-                                                   h3("Options"),
-                                                   selectInput("previous", "Previous studies", choices = c('Not included', 'Included')),
-                                                   selectInput("other", "Other searches for studies", choices = c('Included', 'Not included')),
-                                                   hr(),
-                                                   actionButton("generate", "Click to show flow diagram"),
-                                                   hr(),
-                                                   h3("Download"),
-                                                   downloadButton('PRISMAflowdiagramPDF', 'Download PDF')
+                                          'Upload your edited file here:',
+                                          br(),
+                                          fileInput("data_upload", "Choose CSV File",
+                                                    multiple = FALSE,
+                                                    accept = c("text/csv",
+                                                               "text/comma-separated-values,text/plain",
+                                                               ".csv")),
+                                          h3("Options"),
+                                          selectInput("previous", "Previous studies", choices = c('Not included', 'Included')),
+                                          selectInput("other", "Other searches for studies", choices = c('Included', 'Not included')),
+                                          hr(),
+                                          actionButton("generate", "Click to show flow diagram"),
+                                          hr(),
+                                          h3("Download"),
+                                          downloadButton('downloadPlot', 'Download PDF')
                                       ), 
                                       mainPanel(
                                           plotOutput("plot"),
@@ -110,7 +118,7 @@ server <- function(input, output) {
     })
     
     # Create plot
-    observeEvent(input$generate, {
+    plot <- reactive({
         if (input$previous == 'Included'){
             include_previous = TRUE
         } else {
@@ -121,32 +129,32 @@ server <- function(input, output) {
         } else {
             include_other = FALSE
         }
+        plot <- LSRPrisma_flow(rv$flowdata,
+                       previous = include_previous,
+                       other = include_other)
+        rv$plot <- plot
+        plot
+    })
+    
+    observeEvent(input$generate, {
         output$plot <- renderPlot({
-            LSRPrisma_flow(flowdata,
-                           previous = include_previous,
-                           other = include_other)
+            plot()
         })
     })
     
+    # Demo reactive imgage
+    output$frame <- renderUI({
+        format <- paste0('https://github.com/nealhaddaway/livingPRISMAflow/blob/master/inst/shiny-examples/livingPRISMAflow/www/', input$format, '.png?raw=true')
+        my_test <- tags$img(src=format, width='100%', height = '100%')
+        my_test
+    })
+    
     # Handle downloads ----
-    output$PRISMAflowdiagramPDF <- downloadHandler(
-        filename = "PRISMAoutput.pdf",
-        
+    output$downloadPlot <- downloadHandler(
+        filename = 'PRISMA.pdf',
         content = function(file){
-            pdf(file)
-            if (input$previous == 'Included'){
-                include_previous = TRUE
-            } else {
-                include_previous = FALSE
-            }
-            if (input$other == 'Included'){
-                include_other = TRUE
-            } else {
-                include_other = FALSE
-            }
-            LSRPrisma_flow(rv$flowdata,
-                           previous = include_previous,
-                           other = include_other)
+            pdf(file = file, width = 10, height = 5.354)
+            print(plot())
             dev.off()
         }
     )
