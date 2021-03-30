@@ -22,8 +22,11 @@ Description: Produce flow diagrams that are compliant with the
     Users can choose to include 'previous' and 'other' sources of 
     studies. 
 Imports:
+    dplyr,
     ggplot2,
     ggpubr,
+    magrittr,
+    stats,
     stringr,
     utils
 Suggests:

@@ -30,8 +30,8 @@ previous reviews and other sources.
 \examples{
 \dontrun{
 data <- read.csv('inst/extdata/approach1.csv')
-data <- LSRPrisma_data(data)
-plot <- LSRPrisma_flow(data, previous = FALSE, other = TRUE)
+flowdata <- LSRPrisma_data(data)
+plot <- LSRPrisma_flow(flowdata, previous = FALSE, other = TRUE)
 plot
 }
 }

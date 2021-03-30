@@ -19,7 +19,7 @@ being an additional data point in a LSR incremental update.
 }
 \examples{
 \dontrun{
-data <- read.csv('inst/extdata/approach4.csv')
+data <- read.csv('inst/extdata/approach1.csv', stringsAsFactors=FALSE)
 flowdata <- LSRPrisma_data(data)
 }
 }

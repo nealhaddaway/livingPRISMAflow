@@ -5,7 +5,7 @@
 #' being an additional data point in a LSR incremental update.
 #' @param data Input data frame based on 'inst/extdata/template.csv'.
 #' @return List of objects needed by 'LSRPRISMA_flow()'.
-#' @importFrom stringr str_count
+#' @importFrom stringr str_count str_split_fixed str_subset str_count
 #' @examples 
 #' \dontrun{
 #' data <- read.csv('inst/extdata/approach1.csv', stringsAsFactors=FALSE)
@@ -61,7 +61,10 @@ LSRPrisma_data <- function (data){
     rownames(dbr_excluded) <- names(dataset)
     dbr_excluded <- t(data.frame(subset(dbr_excluded, dbr_excluded[,1] != "0")))
     if (colsnew > 1) {
-      dbr_excluded <- sort(paste0(paste(dbr_excluded, colnames(dbr_excluded), sep = " ("), ")"))
+      dbr_excluded <- as.data.frame(dbr_excluded)
+      dbr_excluded[dbr_excluded==""] <- NA
+      dbr_excluded <- unname(paste0(unlist(Map(paste, dbr_excluded, colnames(dbr_excluded), sep = ' (')), ')'))
+      dbr_excluded <- stringr::str_subset(dbr_excluded, '^NA', negate = TRUE)
     } 
     dbr_excluded <- paste(subset(dbr_excluded, substring(dbr_excluded, 1, 1) != " "), collapse = '\n')
   dbr_excluded_data <- trimws(gsub("[^0-9 ]", "", dataset[18,])) # cannot get it in the right format

@@ -2,10 +2,12 @@ library(shiny)
 library(ggplot2)
 library(shinybusy)
 library(statebins)
+library(dplyr)
+library(magrittr)
 
 source("LSRPrisma_data.R")
+source("LSRPrisma_convert.R")
 source("LSRPrisma_flow.R")
-
 
 #template <- read.csv("www/PRISMA.csv",stringsAsFactors = FALSE)
 
@@ -89,6 +91,10 @@ ui <- shinyUI(navbarPage("Living PRISMA Flow Diagram",
                                           h3("Options"),
                                           selectInput("previous", "Previous studies", choices = c('Not included', 'Included')),
                                           selectInput("other", "Other searches for studies", choices = c('Included', 'Not included')),
+                                          selectInput("output_format", "Visualisation format", choices = c('Approach 1: Base review and each update separately' = 'approach1',
+                                                                                                   'Approach 2: Combined base and update' = 'approach2',
+                                                                                                   'Approach 3: Base review separately and combined updates' = 'approach3',
+                                                                                                   'Approach 4: Base review and updates combined, latest update separate' = 'approach4')),
                                           hr(),
                                           actionButton("generate", "Click to show flow diagram"),
                                           hr(),
@@ -96,7 +102,7 @@ ui <- shinyUI(navbarPage("Living PRISMA Flow Diagram",
                                           downloadButton('downloadPlot', 'Download PDF')
                                       ), 
                                       mainPanel(
-                                          plotOutput("plot", width = '100%'),
+                                          plotOutput("plot"),
                                           add_busy_spinner(spin = "fading-circle", color = "#ffc125", position = "full-page"))
                                   ))
 ))
@@ -110,15 +116,22 @@ server <- function(input, output) {
     rv <- reactiveValues()
     
     # Data Handling ----
-    
     # Use template data to populate editable table
     observeEvent(input$data_upload,{
         rv$data <- read.csv(input$data_upload$datapath)
-        rv$flowdata <- LSRPrisma_data(rv$data)
     })
     
     # Create plot
     plot <- reactive({
+        rv$plot
+    })
+    
+    # Process data and generate plot
+    observeEvent(input$generate, {
+        rv$format <- input$output_format
+        rv$flowdata <- LSRPrisma_convert(rv$data,
+                                         format = rv$format)
+        
         if (input$previous == 'Included'){
             include_previous = TRUE
         } else {
@@ -130,13 +143,11 @@ server <- function(input, output) {
             include_other = FALSE
         }
         plot <- LSRPrisma_flow(rv$flowdata,
-                       previous = include_previous,
-                       other = include_other)
+                               previous = include_previous,
+                               other = include_other)
         rv$plot <- plot
         plot
-    })
-    
-    observeEvent(input$generate, {
+        
         output$plot <- renderPlot({
             plot()
         })
