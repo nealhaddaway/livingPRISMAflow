@@ -8,7 +8,7 @@
 #' @importFrom stringr str_count
 #' @examples 
 #' \dontrun{
-#' data <- read.csv('inst/extdata/approach1.csv')
+#' data <- read.csv('inst/extdata/approach1.csv', stringsAsFactors=FALSE)
 #' flowdata <- LSRPrisma_data(data)
 #' }
 #' @export
