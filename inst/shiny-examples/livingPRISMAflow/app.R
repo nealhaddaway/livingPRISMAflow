@@ -89,7 +89,7 @@ ui <- shinyUI(navbarPage("Living PRISMA Flow Diagram",
                                                                "text/comma-separated-values,text/plain",
                                                                ".csv")),
                                           h3("Options"),
-                                          selectInput("previous", "Previous studies", choices = c('Not included', 'Included')),
+                                          #selectInput("previous", "Previous studies", choices = c('Not included', 'Included')),
                                           selectInput("other", "Other searches for studies", choices = c('Included', 'Not included')),
                                           selectInput("output_format", "Visualisation format", choices = c('Approach 1: Base review and each update separately' = 'approach1',
                                                                                                    'Approach 2: Combined base and update' = 'approach2',
@@ -132,18 +132,18 @@ server <- function(input, output) {
         rv$flowdata <- LSRPrisma_convert(rv$data,
                                          format = rv$format)
         
-        if (input$previous == 'Included'){
-            include_previous = TRUE
-        } else {
-            include_previous = FALSE
-        }
+        #if (input$previous == 'Included'){
+        #    include_previous = TRUE
+        #} else {
+        #    include_previous = FALSE
+        #}
         if (input$other == 'Included'){
             include_other = TRUE
         } else {
             include_other = FALSE
         }
         plot <- LSRPrisma_flow(rv$flowdata,
-                               previous = include_previous,
+                               previous = FALSE,
                                other = include_other)
         rv$plot <- plot
         plot
