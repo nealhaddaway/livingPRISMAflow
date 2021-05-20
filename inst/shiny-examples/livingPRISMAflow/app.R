@@ -118,7 +118,7 @@ server <- function(input, output) {
     # Data Handling ----
     # Use template data to populate editable table
     observeEvent(input$data_upload,{
-        rv$data <- read.csv(input$data_upload$datapath)
+        rv$data <- read.csv(input$data_upload$datapath, stringsAsFactors=FALSE)
     })
     
     # Create plot
