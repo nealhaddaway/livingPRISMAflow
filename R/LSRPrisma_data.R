@@ -2,7 +2,8 @@
 #' 
 #' @description Function to read in data for 'LSRPrisma_flow()' from 
 #' the template file. The data are stored in columns, with each column 
-#' being an additional data point in a LSR incremental update.
+#' being an additional data point in a LSR incremental update. Note that 
+#' users must specify 'stringsAsFactors=FALSE' when uploading data.
 #' @param data Input data frame based on 'inst/extdata/template.csv'.
 #' @return List of objects needed by 'LSRPRISMA_flow()'.
 #' @importFrom stringr str_count str_split_fixed str_subset str_count

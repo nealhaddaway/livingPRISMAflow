@@ -18,8 +18,8 @@
 #' with the base plus previous updates and the final update 
 #' provided as two separate columns.
 #' @importFrom magrittr %>%
-#' @importFrom dplyr mutate_if 
 #' @importFrom stats aggregate
+#' @importFrom dplyr mutate_if 
 #' @importFrom stringr str_split
 #' @return List of objects needed by `LSRPRISMA_flow()`.
 #' @examples 
@@ -288,7 +288,7 @@ process_excludes <- function(data){
     data <- paste(data, collapse = '; ') # combine all columns
     data <- unlist(stringr::str_split(data, '; ')) # separate by '; '
     data <- stringr::str_split_fixed(data, ", ", 2) # separate into dataframe by ', '
-    data <- aggregate(as.numeric(data[,2])~data[,1],data=data,FUN=sum) # consolidate duplicate rows (reasons) by summing n
+    data <- stats::aggregate(as.numeric(data[,2])~data[,1],data=data,FUN=sum) # consolidate duplicate rows (reasons) by summing n
     output <- paste(paste(data[,1], data[,2], sep = ', '), collapse = '; ') # paste back into deduplicated and summed list
     return(output)
   }
