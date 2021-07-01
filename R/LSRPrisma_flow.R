@@ -17,7 +17,7 @@
 #' @importFrom ggpubr theme_transparent
 #' @examples
 #' \dontrun{
-#' data <- read.csv('inst/extdata/approach1.csv', stringsAsFactors=FALSE)
+#' data <- read.csv('inst/extdata/approach2.csv', stringsAsFactors=FALSE)
 #' flowdata <- LSRPrisma_data(data)
 #' plot <- LSRPrisma_flow(flowdata, previous = FALSE, other = TRUE)
 #' plot
